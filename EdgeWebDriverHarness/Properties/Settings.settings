@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EdgeWebDriverHarness.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ConfigFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">config.json</Value>
+    </Setting>
+    <Setting Name="WebDriverName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Microsoft Web Driver</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
