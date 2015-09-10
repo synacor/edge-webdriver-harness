@@ -7,4 +7,4 @@ A simple program to loop over sites and take screenshots via the Edge WebDriver.
 
 ## how to use
 * Run EdgeWebDriverHarness.exe
-* Modify the created `config.json` that is created to specify what sites and pages to run against
+* Modify the `config.json` that is created to specify what sites and pages to run against
