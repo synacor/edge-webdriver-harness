@@ -39,14 +39,22 @@ namespace EdgeWebDriverHarness {
                 var serverPath = Path.Combine(Environment.ExpandEnvironmentVariables($"{((Environment.Is64BitOperatingSystem) ? "%ProgramFiles(x86)%" : "%ProgramFiles%")}"), Properties.Settings.Default.WebDriverName);
                 var options = new EdgeOptions { PageLoadStrategy = EdgePageLoadStrategy.Normal };
 
+                var sites = UserConfig.Instance.Sites.Where(s => string.IsNullOrWhiteSpace(cluster) || s.Cluster.Equals(cluster, StringComparison.OrdinalIgnoreCase)).ToList();
+                var pages = UserConfig.Instance.Pages.ToList();
+
                 using (var driver = new EdgeDriver(serverPath, options)) {
                     //This doesn't seem to work yet?
                     //driver.Manage().Window.Maximize();
                     //driver.Manage().Timeouts().ImplicitlyWait(new TimeSpan(0, 0, 15));
-                    foreach (Site site in UserConfig.Instance.Sites.Where(s => string.IsNullOrWhiteSpace(cluster) || s.Cluster.Equals(cluster, StringComparison.OrdinalIgnoreCase))) {
-                        foreach (Page page in UserConfig.Instance.Pages) {
+                    for (var s = 0; s < sites.Count(); s++) {
+                        var site = sites[s];
+                        Console.WriteLine("------------------------------------");
+                        Console.WriteLine($"Site {s+1} of {sites.Count()}");
+                        Console.WriteLine();
+                        Console.WriteLine(site.Name);
+                        foreach (Page page in pages) {
                             try {
-                                driver.Manage().Timeouts().SetPageLoadTimeout(TimeSpan.FromSeconds(30));
+                                Console.WriteLine($"    {page.Name}");
                                 driver.Navigate().GoToUrl($"{site.BaseUrl}{page.Suffix}");
                                 Thread.Sleep(5000);
                                 var imagePath = Path.Combine(UserConfig.Instance.ScreenShotPath, releaseName, environment, runDateAndHour, "Desktop", $"{site.Name} {page.Name} edge.png");
@@ -57,6 +65,7 @@ namespace EdgeWebDriverHarness {
                                 Trace.WriteLine(e.Message);
                             }
                         }
+                        Console.WriteLine();
                     }
                 }
             } catch (Exception e) {
